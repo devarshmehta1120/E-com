@@ -91,7 +91,7 @@ const login = () => {
               login
             </button>
             <div className="text-center mt-2">
-                            <span className="text-yellow-500">Don't have an account ? <Link to="/auth/signup" className="text-white">Signup</Link></span>
+                            <span className="text-yellow-500">Don't have an a ccount ? <Link to="/auth/signup" className="text-white">Signup</Link></span>
                         </div>
           </form>
           <ToastContainer />
