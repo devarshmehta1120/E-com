@@ -10,7 +10,7 @@ const login = () => {
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(value);
+    // console.log(value);
     const copylogininfo = { ...logininfo };
     copylogininfo[name] = value;
     setlogininfo(copylogininfo);
@@ -23,7 +23,7 @@ const login = () => {
       return handleError("Please fill all the fields");
     }
     try {
-      const url = "http://localhost:8000/auth/login";
+      const url = import.meta.env.VITE_BASE_LOGIN_URL;
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -40,6 +40,7 @@ const login = () => {
         setTimeout(() => {
           navigate({ to: "/" });
         }, 1500);
+        
       } else if(error){
         const details=error?.details[0].message;
         handleError(details);

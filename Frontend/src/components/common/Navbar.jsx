@@ -1,9 +1,10 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
-export const Navbar = () => {
+export  const Navbar = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const navigate = useNavigate();
+    const routerState = useRouterState(); 
 
   // Sync user from localStorage
   useEffect(() => {
@@ -11,7 +12,7 @@ export const Navbar = () => {
     if (user) {
       setLoggedInUser(user);
     }
-  }, []);
+  }, [routerState.location.pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem("loggedInUser");
@@ -40,12 +41,7 @@ export const Navbar = () => {
           <Link to="/" className="hover:text-yellow-400 transition">
             Home
           </Link>
-          <Link to="/about" className="hover:text-yellow-400 transition">
-            About
-          </Link>
-          <Link to="/contact" className="hover:text-yellow-400 transition">
-            Contact
-          </Link>
+          
           <Link to="/cart" className="hover:text-yellow-400 transition">
             Cart
           </Link>

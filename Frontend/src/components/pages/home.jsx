@@ -3,10 +3,17 @@
   import { Link } from "@tanstack/react-router";
   import { StarsBackground } from "@/components/animate-ui/components/backgrounds/stars";
   import hero from "@/image/home_men/1.jpg";
+import { useCart } from "react-use-cart";
+import { useNavigate } from "@tanstack/react-router";
+import { toast } from "react-toastify";
+import { loginHandleError, loginHandleSuccess } from "../../lib/utils";
 
 
   const Home = () => {
-  
+    
+    const {addItem} = useCart();
+    const navigate = useNavigate();
+    const user = localStorage.getItem("loggedInUser");
     const { data, isLoading, isError } = useQuery({
       queryKey: ["products"],
       queryFn: getproduct,
@@ -27,7 +34,21 @@
       );
 
 
+const handleAddToCart = (product) => {
+  if (!user) {
+    loginHandleError("Please login first");
+    navigate({ to: "/auth/login" });
+    return;
+  }
 
+  addItem({
+    ...product,
+    id: product._id,   // required for react-use-cart
+  });
+
+  loginHandleSuccess("Added to cart");
+  navigate({ to: "/cart" });
+};
         
     return (
       <div className="relative min-h-screen text-white">
@@ -75,7 +96,7 @@
                 key={p.id}
                 className="bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-2xl p-6 hover:scale-105 hover:shadow-2xl transition duration-300"
               >
-                <Link to={`/product/${p.id}`}>
+                <Link to={`/product/${p._id}`}>
                   <div className="bg-slate-800 rounded-xl p-4">
                     <img
                       src={p.image}
@@ -92,7 +113,8 @@
                   </p>
                 </Link>
 
-                <button className="mt-4 w-full py-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition font-medium">
+                <button className="mt-4 w-full py-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition font-medium"
+onClick={() => handleAddToCart(p)}>
                   Add to Cart
                 </button>
               </div>

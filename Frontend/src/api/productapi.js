@@ -9,3 +9,9 @@ export const getproduct=async()=>{
     // console.log("Fetched Products:", res.data);
     return res.data;
 }
+export const getproductbyid=async(id)=>{
+    const res = await api.get(`/products/${id}`)
+    console.log("Fetched Product by ID:", res.data);
+    return res.data;
+    // log("Fetched Product by ID:", res.data);
+} 
